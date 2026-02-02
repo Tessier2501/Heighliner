@@ -15,11 +15,26 @@ class Heighliner:
             name (str): The name of the spaceship
             capacity (int): Maximum cargo capacity in tons
         """
+        if capacity < 0:
+            raise ValueError("Capacity must be non-negative")
         self.name = name
         self.capacity = capacity
         self.cargo = 0
         self.destination = None
         self.is_folded = False
+    
+    def _validate_amount(self, amount):
+        """
+        Validate that cargo amount is positive
+        
+        Args:
+            amount (int): Amount to validate
+            
+        Raises:
+            ValueError: If amount is negative
+        """
+        if amount < 0:
+            raise ValueError("Cargo amount must be positive")
     
     def load_cargo(self, amount):
         """
@@ -31,8 +46,7 @@ class Heighliner:
         Returns:
             bool: True if cargo was loaded successfully, False otherwise
         """
-        if amount < 0:
-            raise ValueError("Cargo amount must be positive")
+        self._validate_amount(amount)
         
         if self.cargo + amount > self.capacity:
             return False
@@ -50,8 +64,7 @@ class Heighliner:
         Returns:
             bool: True if cargo was unloaded successfully, False otherwise
         """
-        if amount < 0:
-            raise ValueError("Cargo amount must be positive")
+        self._validate_amount(amount)
         
         if amount > self.cargo:
             return False

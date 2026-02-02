@@ -23,6 +23,11 @@ class TestHeighlinerInitialization:
         assert ship.name == "Guild Heighliner"
         assert ship.capacity == 5000
         assert ship.cargo == 0
+    
+    def test_init_with_negative_capacity_raises_error(self):
+        """Test that negative capacity raises ValueError"""
+        with pytest.raises(ValueError, match="Capacity must be non-negative"):
+            Heighliner("Invalid", capacity=-100)
 
 
 class TestCargoOperations:
