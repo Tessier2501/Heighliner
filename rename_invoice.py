@@ -11,13 +11,15 @@ from pathlib import Path
 
 import pdfplumber
 
-
-PLACEHOLDER_PREFIX = "313977704179" # 将此替换为你的前缀
-AMOUNT_PATTERN = re.compile(r"价税合计.*?¥\s*([0-9,]+(?:\.[0-9]+)?)")
-INVOICE_PATTERN = re.compile(r"(?:发+票+号+码+)+[:：]+\s*(\d+)")
+# ---------- 配置与模式 ----------
+PLACEHOLDER_PREFIX   = "PLACEHOLDER"  # 将此替换为前缀
+AMOUNT_PATTERN       = re.compile(r"价税合计.*?¥\s*([0-9,]+(?:\.[0-9]+)?)")
+INVOICE_PATTERN      = re.compile(r"(?:发+票+号+码+)+[:：]+\s*(\d+)")
 TOTAL_HEADER_PATTERN = re.compile(r"合+\s*计+")
-LINE_AMOUNT_PATTERN = re.compile(r"[¥￥]\s*([0-9,]+(?:\.[0-9]+)?)")
+LINE_AMOUNT_PATTERN  = re.compile(r"[¥￥]\s*([0-9,]+(?:\.[0-9]+)?)")
 
+
+# ---------- 金额提取 ----------
 
 def extract_amount_from_text(text: str) -> str | None:
     """在文本中查找包含 '价税合计' 的行, 返回首个 '¥' 后的金额."""
@@ -71,6 +73,8 @@ def extract_two_amounts_after_total_from_pdf(pdf_path: Path) -> list[str] | None
     return None
 
 
+# ---------- 发票号码提取 ----------
+
 def extract_invoice_from_text(text: str) -> str | None:
     """在文本中查找包含 '发票号码' 的行, 返回其后的号码."""
 
@@ -92,6 +96,8 @@ def extract_invoice_from_pdf(pdf_path: Path) -> str | None:
                 return invoice
     return None
 
+
+# ---------- 重命名辅助 ----------
 
 def sanitize_label(label: str) -> str:
     """清理文件名中的不安全字符, 替换为下划线."""
