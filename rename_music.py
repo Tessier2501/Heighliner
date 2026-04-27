@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 从文件名写入 mp3/flac 的 title / track 标签，支持可选重命名。
-使用示例: python "C:\Users\35723\Documents\Heighliner\rename_music.py" "path"
+使用示例: python "C:/Users/35723/Documents/Heighliner/rename_music.py" "path"
 选项: [--recursive] [--dry-run] [--infer-track] [--start N] [--rename]
 """
 from __future__ import annotations
